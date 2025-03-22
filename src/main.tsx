@@ -7,33 +7,36 @@ import { routeTree } from './routeTree.gen'
 
 import './styles.css'
 import reportWebVitals from './reportWebVitals.ts'
+import { ThemeProvider } from './components/ThemeProvider.tsx'
 
 // Create a new router instance
 const router = createRouter({
-  routeTree,
-  context: {},
-  defaultPreload: 'intent',
-  scrollRestoration: true,
-  defaultStructuralSharing: true,
-  defaultPreloadStaleTime: 0,
+	routeTree,
+	context: {},
+	defaultPreload: 'intent',
+	scrollRestoration: true,
+	defaultStructuralSharing: true,
+	defaultPreloadStaleTime: 0,
 })
 
 // Register the router instance for type safety
 declare module '@tanstack/react-router' {
-  interface Register {
-    router: typeof router
-  }
+	interface Register {
+		router: typeof router
+	}
 }
 
 // Render the app
 const rootElement = document.getElementById('app')
 if (rootElement && !rootElement.innerHTML) {
-  const root = ReactDOM.createRoot(rootElement)
-  root.render(
-    <StrictMode>
-      <RouterProvider router={router} />
-    </StrictMode>,
-  )
+	const root = ReactDOM.createRoot(rootElement)
+	root.render(
+		<ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+			<StrictMode>
+				<RouterProvider router={router} />
+			</StrictMode>,
+		</ThemeProvider>
+	)
 }
 
 // If you want to start measuring performance in your app, pass a function
