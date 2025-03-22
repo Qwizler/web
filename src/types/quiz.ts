@@ -12,9 +12,13 @@ export type Quiz = {
 
 export type QuizDifficulty = "Easy" | "Medium" | "Hard" | "Expert"
 
-export type QuizQestion = {
+export type TQuizQuestion = {
 	id: string
 	question: string
 	choices: string[]
 	difficulty: QuizDifficulty
+}
+
+export type TNewQuizQuestion = Omit<TQuizQuestion, "id"> & {
+	correctChoice: number
 }

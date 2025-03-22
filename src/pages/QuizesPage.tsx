@@ -1,5 +1,8 @@
 import { QuizCard } from "@/components/QuizCard"
+import { Button } from "@/components/ui/button"
 import type { Quiz } from "@/types"
+import { useNavigate } from "@tanstack/react-router"
+import { Plus } from "lucide-react"
 
 const Quizes: Quiz[] = [
 	{
@@ -39,17 +42,24 @@ const Quizes: Quiz[] = [
 ]
 
 export default function QuizesPage() {
+	const navigate = useNavigate()
 	return (
 		<div className="flex h-full w-full flex-col items-center  gap-4 px-4 py-16 sm:px-6 lg:px-8">
 			{/* a quiz card contains title, description, how many questions, and a button to start the quiz, make it minimal, responsive and pretty */}
 			<div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
-				<div className="px-4 lg:px-6">
-					<h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white">
-						Quizes
-					</h1>
-					<p className="text-lg font-medium text-gray-600 dark:text-gray-400">
-						Welcome to your quizes.
-					</p>
+				<div className="flex items-center justify-between px-4 lg:px-6">
+					<div>
+						<h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white">
+							Quizes
+						</h1>
+						<p className="text-lg font-medium text-gray-600 dark:text-gray-400">
+							Welcome to your quizes.
+						</p>
+					</div>
+					<Button variant="default" onClick={async () => navigate({ to: "/q/create" })}>
+						<Plus className="w-4 h-4" />
+						Create Quiz
+					</Button>
 				</div>
 				<div className="grid grid-cols-1 gap-4 lg:grid-cols-2 2xl:grid-cols-3">
 					{Quizes.map((quiz) => (
@@ -64,9 +74,7 @@ export default function QuizesPage() {
 							startQuiz={quiz.startQuiz}
 						/>
 					))}
-
 				</div>
-
 			</div>
 		</div>
 	)

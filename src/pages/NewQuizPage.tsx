@@ -1,26 +1,23 @@
 import { useState } from "react"
 import { Loader2, Plus, Upload } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { QuizBasicInfo } from "@/components/NewQuizBasicInfo"
-import { NewQuizQuestionCard } from "@/components/NewQuizQuestionCard"
+import { QuizBasicInfo } from "@/components/NewQuiz/NewQuizBasicInfo"
+import { NewQuizQuestionCard } from "@/components/NewQuiz/NewQuizQuestionCard"
+import type { TNewQuizQuestion, TQuizQuestion } from "@/types"
 
 
-type Question = {
-	question: string
-	options: string[]
-	correctOption: number
-}
 
 export default function NewQuizPage() {
 	const [loading, setLoading] = useState(false)
 	const [title, setTitle] = useState("")
 	const [description, setDescription] = useState("")
 	const [timeLimit, setTimeLimit] = useState("30")
-	const [questions, setQuestions] = useState<Question[]>([
+	const [questions, setQuestions] = useState<TNewQuizQuestion[]>([
 		{
 			question: "",
-			options: ["", "", "", ""],
-			correctOption: 0
+			choices: ["", "", "", ""],
+			correctChoice: 0,
+			difficulty: "Medium"
 		}
 	])
 
@@ -29,21 +26,22 @@ export default function NewQuizPage() {
 			...questions,
 			{
 				question: "",
-				options: ["", "", "", ""],
-				correctOption: 0
+				choices: ["", "", "", ""],
+				correctChoice: 0,
+				difficulty: "Medium"
 			}
 		])
 	}
 
-	const updateQuestion = (index: number, field: keyof Question, value: any) => {
+	const updateQuestion = (index: number, field: keyof TNewQuizQuestion, value: any) => {
 		const newQuestions = [...questions]
 		newQuestions[index] = { ...newQuestions[index], [field]: value }
 		setQuestions(newQuestions)
 	}
 
-	const updateOption = (questionIndex: number, optionIndex: number, value: string) => {
+	const updateChoice = (questionIndex: number, choiceIndex: number, value: string) => {
 		const newQuestions = [...questions]
-		newQuestions[questionIndex].options[optionIndex] = value
+		newQuestions[questionIndex].choices[choiceIndex] = value
 		setQuestions(newQuestions)
 	}
 
@@ -76,7 +74,7 @@ export default function NewQuizPage() {
 								question={question}
 								questionIndex={qIndex}
 								onQuestionUpdate={updateQuestion}
-								onOptionUpdate={updateOption}
+								onChoiceUpdate={updateChoice}
 							/>
 						))}
 

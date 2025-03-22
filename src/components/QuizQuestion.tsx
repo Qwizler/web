@@ -1,10 +1,10 @@
-import type { QuizQestion } from "@/types"
+import type { TQuizQuestion } from "@/types"
 import { useState } from "react"
 import { QuizDifficultyBadge } from "./QuizCard"
 import { Button } from "./ui/button"
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "./ui/card"
 
-export function QuizQuestion({ id, question, choices, difficulty, currentQuestion }: QuizQestion & { currentQuestion: number }) {
+export function QuizQuestion({ id, question, choices, difficulty, currentQuestion }: TQuizQuestion & { currentQuestion: number }) {
 	const [answer, setAnswer] = useState<number | null>(null)
 	const [isGivingUp, setIsGivingUp] = useState(false)
 

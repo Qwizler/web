@@ -1,7 +1,7 @@
 import { QuizHeader } from "@/components/QuizHeader"
 import { QuizQuestion } from "@/components/QuizQuestion"
 import { Button } from "@/components/ui/button"
-import type { Quiz, QuizQestion } from "@/types"
+import type { Quiz, TQuizQuestion } from "@/types"
 
 
 const quiz: Quiz = {
@@ -13,7 +13,7 @@ const quiz: Quiz = {
 	startQuiz: "Start Quiz",
 }
 
-const questions: QuizQestion[] = [
+const questions: TQuizQuestion[] = [
 	{
 		id: "3fc13aed-87e5-4faf-8b5b-6028dd701cde",
 		question: "What is the capital of France?",
