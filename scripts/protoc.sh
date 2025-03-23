@@ -23,11 +23,13 @@ DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
 #        $(API_PROTO_FILES)
 
 protoc -I=$DIR \
+	--plugin=protoc-gen-ts=./node_modules/.bin/protoc-gen-ts \
 	--proto_path=$IN/third_party \
 	--proto_path=$IN/api \
-	--js_out=import_style=commonjs:$OUT \
-	--grpc-web_out=import_style=typescript,mode=grpcwebtext:$OUT \
-	$IN/api/*.proto
+	--js_out=import_style=commonjs,binary:$OUT \
+	--ts_out=$OUT \
+	\
+	$IN/api/*.proto # --grpc-web_out=import_style=typescript,mode=grpcweb:$OUT \
 
 # protoc -I=$IN $IN/*.proto \
 # 	--js_out=import_style=commonjs:$OUT \

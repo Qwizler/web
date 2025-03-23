@@ -1,5 +1,5 @@
 
-import { QuizzesClient } from "../rpc/QuizzesServiceClientPb"
+import { QuizzesClient } from "../../rpc/QuizzesServiceClientPb"
 
 /**
  * Creates a new QuizzesClient instance with the configured GRPC endpoint

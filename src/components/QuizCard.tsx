@@ -1,10 +1,11 @@
 import { cn } from "@/lib/utils"
 import type { Quiz, QuizDifficulty } from "@/types"
 import { Target, Clock, List } from "lucide-react"
-import { Card, CardAction, CardContent, CardFooter, CardHeader, CardTitle } from "./ui/card"
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "./ui/card"
 import { Badge } from "./ui/badge"
 import { useNavigate } from "@tanstack/react-router"
 import { Button } from "./ui/button"
+import { MatchDifficulty } from "@/lib/difficulty"
 
 function DifficultyColor(difficulty: QuizDifficulty) {
 	switch (difficulty) {
@@ -16,6 +17,8 @@ function DifficultyColor(difficulty: QuizDifficulty) {
 			return "text-red-500"
 		case "Expert":
 			return "text-purple-500"
+		case "Unknown":
+			return "text-gray-500"
 	}
 }
 export function QuizDifficultyBadge({ difficulty }: { difficulty: QuizDifficulty }) {
@@ -54,7 +57,7 @@ export function QuizQuestionsBadge({ questions }: { questions: number }) {
 	)
 }
 
-export function QuizCard({ id, title, description, questions, durationSeconds, difficulty, startQuiz }: Quiz) {
+export function QuizCard({ id, title, description, metadataMap, tagsList, difficulty, userId, audit, thumbnail, duration, cover, category }: Quiz) {
 	const navigate = useNavigate()
 	return (
 		<Card className="flex flex-col gap-4">
@@ -68,14 +71,15 @@ export function QuizCard({ id, title, description, questions, durationSeconds, d
 					{description.length > 250 ? `${description.slice(0, 250)}...` : description}
 				</p>
 				<div className="flex flex-row items-center justify-start flex-wrap">
-					<QuizQuestionsBadge questions={questions} />
-					{durationSeconds && (<QuizTimeBadge duration={durationSeconds} />)}
-					{difficulty && (<QuizDifficultyBadge difficulty={difficulty} />)} </div>
-				{/* add a button to start the quiz */}
+					<QuizQuestionsBadge questions={0} />
+					{duration && (<QuizTimeBadge duration={duration} />)}
+					{difficulty && (<QuizDifficultyBadge difficulty={MatchDifficulty(difficulty)} />)}
+					{/* add a button to start the quiz */}
+				</div>
 			</CardContent>
 			<CardFooter>
 				<Button className="" onClick={() => navigate({ to: `/q/${id}` })}>
-					{startQuiz}
+					Start Quiz
 				</Button>
 			</CardFooter>
 		</Card>
