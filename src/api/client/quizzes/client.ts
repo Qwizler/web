@@ -1,15 +1,22 @@
-
-import { QuizzesClient } from "../../rpc/QuizzesServiceClientPb"
-
-/**
- * Creates a new QuizzesClient instance with the configured GRPC endpoint
- * @returns {QuizzesClient} A configured GRPC client for the Quizzes service
- * @throws {Error} If VITE_QUIZZES_GRPC environment variable is not set
- */
-export default function NewQuizzesClient(): QuizzesClient {
-	const endpoint = import.meta.env.VITE_QUIZZES_GRPC
+import {
+	CreateQuiz,
+	DeleteQuiz,
+	GetQuiz,
+	ListQuizzes,
+	UpdateQuiz,
+} from "./queries";
+export function NewQuizzesRestClient() {
+	const endpoint = import.meta.env.VITE_QUIZZES_HTTP;
 	if (!endpoint) {
-		throw new Error("VITE_QUIZZES_GRPC is not set")
+		throw new Error("VITE_QUIZZES_HTTP is not set");
 	}
-	return new QuizzesClient(endpoint)
+	return {
+		CreateQuiz: CreateQuiz(endpoint),
+		DeleteQuiz: DeleteQuiz(endpoint),
+		GetQuiz: GetQuiz(endpoint),
+		ListQuizzes: ListQuizzes(endpoint),
+		UpdateQuiz: UpdateQuiz(endpoint),
+	};
 }
+
+export default NewQuizzesRestClient;

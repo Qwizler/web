@@ -1,32 +1,30 @@
-import * as pb from "@/api/rpc/quizzes_pb"
+import type { components } from "@/api/spec/quizzes";
 
-// export type Quiz = {
-// 	id: string
-// 	title: string
-// 	description: string
-// 	questions: number
-// 	durationSeconds?: number
-// 	difficulty?: QuizDifficulty
-// 	startQuiz: string
-// 	tags?: string[]
-// }
-
-export type DifficultyEnum = pb.Difficulty
-export type QuizDifficulty = "Easy" | "Medium" | "Hard" | "Expert" | "Unknown"
+export type QuizDifficulty = "Easy" | "Medium" | "Hard" | "Expert" | "Unknown";
 
 export type TQuizQuestion = {
-	id: string
-	question: string
-	choices: string[]
-	difficulty: QuizDifficulty
-}
+	id: string;
+	question: string;
+	choices: string[];
+	difficulty: QuizDifficulty;
+};
 
 export type TNewQuizQuestion = Omit<TQuizQuestion, "id"> & {
-	correctChoice: number
-}
+	correctChoice: number;
+};
 
-export type Quiz = pb.Quiz.AsObject
-export type UpdateQuizData = pb.UpdateQuizRequest.AsObject
-export type CreateQuizData = pb.CreateQuizRequest.AsObject
-export type ListQuiz = pb.ListQuizResponse.AsObject
+export type CreateQuizRequest =
+	components["schemas"]["quiz.v1.CreateQuizRequest"];
+export type CreateQuizResponse =
+	components["schemas"]["quiz.v1.CreateQuizResponse"];
+export type GetQuizResponse = components["schemas"]["quiz.v1.GetQuizResponse"];
+export type ListQuizResponse =
+	components["schemas"]["quiz.v1.ListQuizResponse"];
+export type UpdateQuizRequest =
+	components["schemas"]["quiz.v1.UpdateQuizRequest"];
+export type UpdateQuizResponse =
+	components["schemas"]["quiz.v1.UpdateQuizResponse"];
+export type DeleteQuizResponse =
+	components["schemas"]["quiz.v1.DeleteQuizResponse"];
 
+export type Quiz = components["schemas"]["quiz.v1.Quiz"];

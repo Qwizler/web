@@ -27,9 +27,8 @@ protoc -I=$DIR \
 	--proto_path=$IN/third_party \
 	--proto_path=$IN/api \
 	--js_out=import_style=commonjs,binary:$OUT \
-	--ts_out=$OUT \
-	\
-	$IN/api/*.proto # --grpc-web_out=import_style=typescript,mode=grpcweb:$OUT \
+	--ts_out=service=true:$OUT \
+	IN/api/*.proto # --grpc-web_out=import_style=typescript,mode=grpcweb:$OUT \
 
 # protoc -I=$IN $IN/*.proto \
 # 	--js_out=import_style=commonjs:$OUT \
