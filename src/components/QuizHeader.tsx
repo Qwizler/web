@@ -1,12 +1,27 @@
 import type { Quiz } from "@/types";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "./ui/collapsible";
+import {
+	Collapsible,
+	CollapsibleContent,
+	CollapsibleTrigger,
+} from "./ui/collapsible";
 import { ChevronDown, Clock, List } from "lucide-react";
 import { GradientCard } from "./GradientCard";
 
-
-
-
-export function QuizHeader({ title, description, questions, durationSeconds, currentQuestion }: Quiz & { currentQuestion: number }) {
+export function QuizHeader({
+	id,
+	title,
+	description,
+	currentQuestion,
+	questions,
+	durationSeconds,
+}: {
+	id: string;
+	title: string;
+	description: string;
+	questions: number;
+	currentQuestion: number;
+	durationSeconds?: number;
+}) {
 	return (
 		<GradientCard>
 			<div className="mb-4 space-y-1">
@@ -16,7 +31,9 @@ export function QuizHeader({ title, description, questions, durationSeconds, cur
 						<span>View Description</span>
 						<ChevronDown className="h-3 w-3" />
 					</CollapsibleTrigger>
-					<CollapsibleContent className="mt-2 text-gray-100 dark:text-gray-200 bg-white/10 backdrop-blur-sm rounded-lg p-3">{description}</CollapsibleContent>
+					<CollapsibleContent className="mt-2 text-gray-100 dark:text-gray-200 bg-white/10 backdrop-blur-sm rounded-lg p-3">
+						{description}
+					</CollapsibleContent>
 				</Collapsible>
 			</div>
 			<div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
@@ -36,17 +53,25 @@ export function QuizHeader({ title, description, questions, durationSeconds, cur
 						</div>
 						<div>
 							<p className="text-xs font-medium text-white">Time Limit</p>
-							<p className="text-xs text-gray-200">{durationSeconds && `${Math.floor(durationSeconds / 60)} minutes`}</p>
+							<p className="text-xs text-gray-200">
+								{durationSeconds &&
+									`${Math.floor(durationSeconds / 60)} minutes`}
+							</p>
 						</div>
 					</div>
 				</div>
 				<div className="flex items-center gap-2">
 					<div className="h-1.5 w-full overflow-hidden rounded-full bg-white/20 dark:bg-white/10 sm:w-48">
-						<div className="h-1.5 rounded-full bg-violet-300" style={{ width: `${(currentQuestion / questions) * 100}%` }}></div>
+						<div
+							className="h-1.5 rounded-full bg-violet-300"
+							style={{ width: `${(currentQuestion / questions) * 100}%` }}
+						/>
 					</div>
-					<span className="text-xs font-medium text-white">{currentQuestion}/{questions}</span>
+					<span className="text-xs font-medium text-white">
+						{currentQuestion}/{questions}
+					</span>
 				</div>
 			</div>
 		</GradientCard>
-	)
+	);
 }

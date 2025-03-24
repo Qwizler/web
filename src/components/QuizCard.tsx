@@ -12,6 +12,7 @@ import { Badge } from "./ui/badge";
 import { useNavigate } from "@tanstack/react-router";
 import { Button } from "./ui/button";
 import { MatchDifficulty } from "@/lib/difficulty";
+import { Skeleton } from "./ui/skeleton";
 
 function DifficultyColor(difficulty: QuizDifficulty) {
 	switch (difficulty) {
@@ -93,35 +94,60 @@ export function QuizCard({
 	duration,
 	cover,
 	category,
-}: Quiz) {
+	isLoading,
+}: Quiz & { isLoading: boolean }) {
 	const navigate = useNavigate();
 	const durationInt = duration ? Number.parseFloat(duration) : undefined;
 	return (
-		<Card className="flex flex-col gap-4">
-			<CardHeader className="">
-				<CardTitle>{title}</CardTitle>
-			</CardHeader>
-			<CardContent>
-				{description && (
-					<p className="text-sm font-medium text-gray-600 dark:text-gray-400">
-						{description.length > 250
-							? `${description.slice(0, 250)}...`
-							: description}
-					</p>
-				)}
-				<div className="flex flex-row items-center justify-start flex-wrap">
-					<QuizQuestionsBadge questions={0} />
-					{durationInt && <QuizTimeBadge duration={durationInt} />}
-					{difficulty && (
-						<QuizDifficultyBadge difficulty={MatchDifficulty(difficulty)} />
-					)}
-				</div>
-			</CardContent>
-			<CardFooter>
-				<Button className="" onClick={() => navigate({ to: `/q/${id}` })}>
-					Start Quiz
-				</Button>
-			</CardFooter>
-		</Card>
+		<>
+			{isLoading ? (
+				<Card className="flex flex-col gap-4 min-w-80 flex-grow basis-80 max-w-80">
+					<CardHeader className="space-y-2">
+						<Skeleton className="h-6 w-3/4" />
+					</CardHeader>
+					<CardContent className="space-y-4">
+						<div className="space-y-2">
+							<Skeleton className="h-4 w-full" />
+							<Skeleton className="h-4 w-5/6" />
+						</div>
+						<div className="flex flex-row items-center gap-2 flex-wrap">
+							<Skeleton className="h-4 w-20" />
+							<Skeleton className="h-4 w-20" />
+							<Skeleton className="h-4 w-20" />
+						</div>
+					</CardContent>
+					<CardFooter>
+						<Skeleton className="h-10 w-24" />
+					</CardFooter>
+				</Card>
+			) : (
+				<Card className="flex flex-col gap-4 min-w-80 flex-grow basis-80">
+					<CardHeader className="">
+						<CardTitle>{title}</CardTitle>
+					</CardHeader>
+					<CardContent>
+						{description && (
+							<p className="text-sm font-medium text-gray-600 dark:text-gray-400">
+								{description.length > 250
+									? `${description.slice(0, 250)}...`
+									: description}
+							</p>
+						)}
+						<div className="flex flex-row items-center justify-start flex-wrap">
+							<QuizQuestionsBadge questions={0} />
+							{durationInt && <QuizTimeBadge duration={durationInt} />}
+							{difficulty && (
+								<QuizDifficultyBadge difficulty={MatchDifficulty(difficulty)} />
+							)}
+						</div>
+					</CardContent>
+					<CardFooter>
+						<Button className="" onClick={() => navigate({ to: `/q/${id}` })}>
+							Start Quiz
+						</Button>
+					</CardFooter>
+				</Card>
+			)}
+		</>
 	);
 }
